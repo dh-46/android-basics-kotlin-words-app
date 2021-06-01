@@ -20,6 +20,23 @@ class WordListFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+
+    private lateinit var letterId: String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        /**
+         * arguments 可能為 null
+         * 所以這裡的 let() 內，是假設 arguments 不為 NULL 時
+         * 該做的事情
+         * 而預設傳入的參數就叫 it
+         */
+        arguments?.let {
+            letterId = it.getString(LETTER).toString()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,11 +48,6 @@ class WordListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Retrieve the LETTER from the Intent extras
-        // intent.extras.getString returns String? (String or null)
-        // so toString() guarantees that the value will be a String
-        val letterId = activity?.intent?.extras?.getString(WordListFragment.LETTER).toString()
 
         val recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(activity)
